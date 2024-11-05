@@ -1,0 +1,295 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block section %}
+<div class="brand-header">
+  <div class="brand-content">
+    <h1 class="brand-title">{{ object.modelo }}</h1>
+    <div class="brand-divider"></div>
+    <p class="brand-subtitle">{{ object.concesionario.nombre }}</p>
+  </div>
+</div>
+{% endblock section %} 
+
+{% block maincontent %}
+<div class="vehicle-detail-container">
+  <div class="vehicle-detail-grid">
+    <div class="vehicle-image-section">
+      {% if object.auto %}
+        <img src="{{ object.auto.url }}" alt="{{ object.modelo }}" class="vehicle-detail-image" />
+      {% else %}
+        <img src="{% static 'img/default-car.jpg' %}" alt="Imagen por defecto" class="vehicle-detail-image" />
+      {% endif %}
+    </div>
+    
+    <div class="vehicle-info-section">
+      <div class="info-card">
+        <div class="info-header">
+          <h2 class="info-title">Especificaciones</h2>
+          <div class="action-buttons">
+            <a href="{% url 'vehiculo-update' object.id %}" class="edit-button" title="Editar vehículo">
+              <i class="fas fa-edit"></i> Editar
+            </a>
+            <a href="{% url 'vehiculo-delete' object.id %}" class="delete-button" title="Eliminar vehículo">
+              <i class="fas fa-trash"></i> Eliminar
+            </a>
+          </div>
+        </div>
+        
+        <div class="info-grid">
+          <div class="info-item">
+            <i class="fas fa-cog"></i>
+            <h3>Transmisión</h3>
+            <p>{{ object.transmision }}</p>
+          </div>
+          
+          <div class="info-item">
+            <i class="fas fa-star"></i>
+            <h3>Equipamiento</h3>
+            <p>{{ object.equipamiento }}</p>
+          </div>
+          
+          <div class="info-item">
+            <i class="fas fa-tag"></i>
+            <h3>Precio</h3>
+            <p class="price">${{ object.precio }} COP</p>
+          </div>
+        </div>
+
+        <div class="vehicle-description">
+          <h3>Información Adicional</h3>
+          <p>{{ object.info }}</p>
+        </div>
+
+        <div class="button-group">
+          <a href="{% url 'vehiculo-list' object.concesionario.id %}" class="back-button">
+            <i class="fas fa-arrow-left"></i> Volver a la lista
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .vehicle-detail-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 4rem;
+  }
+
+  .vehicle-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .vehicle-image-section {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  .vehicle-detail-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .vehicle-image-section:hover .vehicle-detail-image {
+    transform: scale(1.05);
+  }
+
+  .info-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  .info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .info-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .edit-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #e82127;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .edit-button:hover {
+    background-color: #c81e23;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .edit-button i {
+    font-size: 1.1rem;
+  }
+
+  .delete-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #dc3545;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .delete-button:hover {
+    background-color: #c82333;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .delete-button i {
+    font-size: 1.1rem;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .info-item {
+    text-align: center;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+  }
+
+  .info-item:hover {
+    transform: translateY(-5px);
+  }
+
+  .info-item i {
+    font-size: 2rem;
+    color: #e82127;
+    margin-bottom: 1rem;
+  }
+
+  .info-item h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  .info-item p {
+    color: #666;
+    margin: 0;
+  }
+
+  .price {
+    color: #e82127;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .vehicle-description {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+  }
+
+  .vehicle-description h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  .vehicle-description p {
+    color: #666;
+    line-height: 1.6;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #1a1a1a;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .back-button:hover {
+    background-color: #333;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .back-button i {
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 992px) {
+    .vehicle-detail-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .vehicle-detail-container {
+      padding: 1.5rem;
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .info-header {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .edit-button,
+    .delete-button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+{% endblock maincontent %}

@@ -1,0 +1,143 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block section %}
+<div class="brand-header">
+  <div class="brand-content">
+    <h1 class="brand-title">Nuevo Concesionario</h1>
+    <div class="brand-divider"></div>
+    <p class="brand-subtitle">Agregar un nuevo concesionario a la red</p>
+  </div>
+</div>
+{% endblock section %} 
+
+{% block maincontent %}
+<div class="form-container">
+  <div class="form-card">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <div class="form-group">
+        <label for="id_nombre">Nombre del Concesionario</label>
+        {{ form.nombre }}
+      </div>
+
+      <div class="form-group">
+        <label for="id_zona">Zona</label>
+        {{ form.zona }}
+      </div>
+
+      <div class="form-group">
+        <label for="id_photo">Fotografía</label>
+        {{ form.photo }}
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-save"></i> Guardar
+        </button>
+        <a href="{% url 'concesionario-list' %}" class="cancel-btn">
+          <i class="fas fa-times"></i> Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+  .form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 4rem;
+  }
+
+  .form-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: #e82127;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .submit-btn {
+    flex: 1;
+    padding: 0.8rem;
+    background-color: #e82127;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    background-color: #c81e23;
+  }
+
+  .cancel-btn {
+    flex: 1;
+    padding: 0.8rem;
+    background-color: #1a1a1a;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .cancel-btn:hover {
+    background-color: #333;
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    .form-container {
+      padding: 1.5rem;
+    }
+
+    .button-group {
+      flex-direction: column;
+    }
+
+    .submit-btn,
+    .cancel-btn {
+      width: 100%;
+    }
+  }
+</style>
+{% endblock maincontent %}
