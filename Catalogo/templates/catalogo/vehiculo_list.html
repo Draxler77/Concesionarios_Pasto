@@ -13,6 +13,21 @@
 {% endblock section %} 
 
 {% block maincontent %}
+<div class="search-container">
+  <form method="get" class="search-form">
+    <div class="search-input-group">
+      <i class="fas fa-search search-icon"></i>
+      <input 
+        type="text" 
+        name="search" 
+        class="search-input" 
+        placeholder="Buscar vehículo..."
+        value="{{ request.GET.search }}"
+      >
+    </div>
+  </form>
+</div>
+
 <div class="vehicles-grid">
   {% for vehiculo in object_list %}
   <div class="vehicle-item">
@@ -44,6 +59,24 @@
     <p>No hay vehículos disponibles en este momento.</p>
   </div>
   {% endfor %}
+</div>
+
+<div class="pagination-container">
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-btn">
+      <i class="fas fa-chevron-left"></i>
+    </a>
+  {% endif %}
+  
+  <span class="pagination-info">
+    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+  </span>
+  
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="pagination-btn">
+      <i class="fas fa-chevron-right"></i>
+    </a>
+  {% endif %}
 </div>
 
 <div class="back-button-container">
@@ -105,7 +138,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 2rem;
-    padding: 2rem 4rem;
+    padding: 1rem 4rem;
     max-width: 1400px;
     margin: 0 auto;
   }
@@ -161,13 +194,8 @@
     justify-content: center;
     gap: 0.5rem;
     margin-bottom: 1.5rem;
-    color: #e82127;
     font-size: 1.1rem;
-    font-weight: 500;
-  }
-
-  .vehicle-price i {
-    color: #999;
+    color: #e82127;
   }
 
   .view-details-btn {
@@ -179,7 +207,7 @@
     text-align: center;
     text-decoration: none;
     border-radius: 6px;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
   }
 
   .view-details-btn:hover {
@@ -187,39 +215,27 @@
     color: white;
   }
 
-  .no-vehicles {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 4rem;
-    color: #666;
-  }
-
-  .no-vehicles i {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: #999;
-  }
-
   .back-button-container {
-    text-align: center;
-    margin-top: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
     padding: 0 4rem 2rem;
   }
 
   .back-button {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     padding: 0.8rem 1.5rem;
     background-color: #1a1a1a;
     color: white;
     text-decoration: none;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-    font-weight: 500;
+    border-radius: 50px;
+    transition: all 0.3s ease;
   }
 
   .back-button:hover {
     background-color: #333;
     color: white;
+    transform: translateX(-5px);
   }
 
   .back-button i {
@@ -256,13 +272,89 @@
     margin-right: 0.5rem;
   }
 
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+  }
+
+  .pagination-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #1a1a1a;
+    color: white;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .pagination-btn:hover {
+    background-color: #e82127;
+    transform: translateY(-2px);
+  }
+
+  .pagination-info {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 500;
+  }
+
+  .search-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.5rem 4rem 0;
+  }
+
+  .search-form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .search-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 1rem;
+    color: #666;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    border: 2px solid #ddd;
+    border-radius: 50px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: white;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: #e82127;
+    box-shadow: 0 0 0 3px rgba(232, 33, 39, 0.1);
+  }
+
+  .search-input::placeholder {
+    color: #999;
+  }
+
   @media (max-width: 768px) {
     .brand-header {
       padding: 2rem;
     }
 
     .vehicles-grid {
-      padding: 1.5rem;
+      padding: 1rem 1.5rem;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.5rem;
     }
@@ -299,6 +391,19 @@
     
     .add-button {
       padding: 0.8rem 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    .search-container {
+      padding: 1rem 1.5rem 0;
+    }
+
+    .search-input {
+      font-size: 0.9rem;
+      padding: 0.8rem 1rem 0.8rem 2.8rem;
+    }
+
+    .search-icon {
       font-size: 0.9rem;
     }
   }

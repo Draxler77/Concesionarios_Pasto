@@ -18,14 +18,15 @@
   <section class="content">
     {% block maincontent %}
     <div class="container py-5">
-      <!-- Admin Cards -->
       <div class="admin-container">
         <div class="admin-card">
           <div class="card shadow-lg">
             <div class="card-body text-center">
-              <i class="fas fa-building fa-4x mb-4 text-accent"></i>
-              <h3 class="card-title">Gestión de Concesionarios</h3>
-              <p class="card-text">Administra la información de los concesionarios</p>
+              <i class="fas fa-building text-accent mb-3" style="font-size: 3rem;"></i>
+              <h2 class="card-title">Gestión de Concesionarios</h2>
+              <p class="card-text">
+                Administre los concesionarios y vehículos de manera eficiente.
+              </p>
               <a href="{% url 'concesionario-list' %}" class="admin-btn mt-3">
                 <i class="fas fa-cog"></i> Administrar
               </a>
@@ -126,7 +127,7 @@
     color: var(--accent-color);
     transition: color 0.3s ease;
   }
-
+  
   .admin-btn:hover i {
     color: white;
   }
